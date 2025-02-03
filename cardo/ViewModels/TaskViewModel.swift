@@ -9,10 +9,12 @@ import Foundation
 
 class TaskViewModel: ObservableObject {
     @Published var tasks: [Task] = []
+    var newTask: String = ""
 
-    func addTask(title: String) {
-        let newTask = Task(title: title, isCompleted: false)
-        tasks.append(newTask)
+    func addTask() {
+        if !newTask.isEmpty {
+            tasks.append(Task(title: newTask, isCompleted: false))
+        }
     }
 
     func toggleTask(_ task: Task) {
