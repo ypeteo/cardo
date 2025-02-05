@@ -9,9 +9,30 @@ import SwiftUI
 
 struct TasksList: View {
     @ObservedObject var viewModel: TaskViewModel
-//    @State private var newTask: String = ""
+    @State private var showAddTaskModal = false
     
     var body: some View {
+        ZStack {
+            Text("Tasks")
+                .font(.title)
+            
+            HStack {
+                Spacer()
+                Button(action: {
+//                    viewModel.addTask()
+                    showAddTaskModal = true
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title)
+                }
+            }
+            .padding(.horizontal)
+        }
+        .sheet(isPresented: $showAddTaskModal) {
+            AddTaskView(viewModel: viewModel)
+        }
+        
+
         List {
             ForEach(viewModel.tasks, id: \.id) { task in
                 SingleTaskView(task: task) {
@@ -21,18 +42,6 @@ struct TasksList: View {
             }
             .onDelete(perform: viewModel.deleteTask)
         }
-        
-        HStack {
-            TextField("Enter new task", text: $viewModel.newTask)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            Button(action: {
-                viewModel.addTask()
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .font(.title)
-            }
-        }
-        .padding()
     }
 }
 

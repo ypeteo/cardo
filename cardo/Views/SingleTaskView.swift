@@ -11,7 +11,7 @@ struct SingleTaskView: View {
     let task: Task
     let toggleCompletion: () -> Void
     
-    @State private var showDetailView = false
+    @State private var showTaskDetails = false
     
     var body: some View {
         HStack {
@@ -23,7 +23,7 @@ struct SingleTaskView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                showDetailView = true
+                showTaskDetails = true
             }
             
             Button(action: toggleCompletion) {
@@ -32,7 +32,7 @@ struct SingleTaskView: View {
             .buttonStyle(BorderlessButtonStyle())
         }
         .padding()
-        .sheet(isPresented: $showDetailView) {
+        .sheet(isPresented: $showTaskDetails) {
             TaskDetailView(task: task)
         }
 
