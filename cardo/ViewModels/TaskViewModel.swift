@@ -9,11 +9,12 @@ import Foundation
 
 class TaskViewModel: ObservableObject {
     @Published var tasks: [Task] = []
-    var newTask: String = ""
+    var newTaskTitle: String = ""
+    @Published var newTaskDueDate: Date? = nil
 
     func addTask() {
-        if !newTask.isEmpty {
-            tasks.append(Task(title: newTask, isCompleted: false))
+        if !newTaskTitle.isEmpty {
+            tasks.append(Task(title: newTaskTitle, isCompleted: false, dueDate: newTaskDueDate))
         }
     }
 

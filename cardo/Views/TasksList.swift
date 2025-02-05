@@ -19,17 +19,19 @@ struct TasksList: View {
             HStack {
                 Spacer()
                 Button(action: {
-//                    viewModel.addTask()
                     showAddTaskModal = true
                 }) {
                     Image(systemName: "plus.circle.fill")
                         .font(.title)
+                        .foregroundColor(Color.accentColor)
                 }
             }
-            .padding(.horizontal)
+            .padding()
         }
         .sheet(isPresented: $showAddTaskModal) {
             AddTaskView(viewModel: viewModel)
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.large])
         }
         
 
@@ -38,10 +40,10 @@ struct TasksList: View {
                 SingleTaskView(task: task) {
                     viewModel.toggleTask(task)
                 }
-                .listRowBackground(Color.turquoise)
             }
             .onDelete(perform: viewModel.deleteTask)
         }
+        .listStyle(PlainListStyle())
     }
 }
 

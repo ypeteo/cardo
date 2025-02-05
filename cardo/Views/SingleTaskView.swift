@@ -15,6 +15,13 @@ struct SingleTaskView: View {
     
     var body: some View {
         HStack {
+            Button(action: toggleCompletion) {
+                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(Color.accentColor)
+            }
+            .padding(.trailing)
+            .buttonStyle(BorderlessButtonStyle())
+            
             HStack {
                 Text(task.title)
                     .font(.headline)
@@ -25,11 +32,6 @@ struct SingleTaskView: View {
             .onTapGesture {
                 showTaskDetails = true
             }
-            
-            Button(action: toggleCompletion) {
-                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-            }
-            .buttonStyle(BorderlessButtonStyle())
         }
         .padding()
         .sheet(isPresented: $showTaskDetails) {

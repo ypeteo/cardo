@@ -9,17 +9,43 @@ import SwiftUI
 
 struct AddTaskView: View {
     @ObservedObject var viewModel: TaskViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State var showDatePickerView = false
     
     var body: some View {
-        HStack {
-            TextField("Enter new task", text: $viewModel.newTask)
+        VStack {
+            TextField("Enter new task", text: $viewModel.newTaskTitle)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-            Button(action: {
-                viewModel.addTask()
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .font(.title)
+            
+            HStack {
+//                HStack {
+//                    if let dueDate = viewModel.newTaskDueDate {
+//                        Text(dueDate, style: .date)
+//                    }
+//
+//                    Button(action: {
+//                        showDatePickerView = true
+//                    }) {
+//                        Image(systemName: "calendar.badge.plus")
+//                            .font(.title)
+//                    }
+//                    .sheet(isPresented: $showDatePickerView) {
+//                        DatePickerView(selectedDate: $viewModel.newTaskDueDate)
+//                            .presentationDetents([.medium])
+//                    }
+//                }
+                AddDueDateView(dueDate: $viewModel.newTaskDueDate)
+
+
+                Button(action: {
+                    viewModel.addTask()
+                    dismiss()
+                }) {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.title)
+                }
             }
+
         }
         .padding()
     }
